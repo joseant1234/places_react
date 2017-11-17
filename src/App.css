@@ -18,3 +18,46 @@
   margin-bottom: 2em;
   margin-left: -200px;
 }
+
+.Header-Benefit{
+  width: 32%;
+  display: inline-block;
+  margin-right: 1%;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.Header-Benefit div:not(.Header-Benefit-content){
+  padding: 0px !important;
+}
+
+.Header-Benefit-image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ocupa solo el 30% de la tarjeta*/
+  flex-basis: 30%;
+  /* para navegaodrs antiguos se confirma con max-width*/
+  max-width: 30%;
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  padding-right: .5rem;
+  padding-left: .5rem;
+}
+
+.Header-Benefit-image img{
+  /* para q  las imágenes no desborden el ancho de los elementos mismos*/
+  max-width: 100%;
+}
+
+.Header-Benefit-content{
+  flex-basis: 65%;
+  max-width: 65%;
+  padding-top: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-bottom: 10px !important;
+
+}
