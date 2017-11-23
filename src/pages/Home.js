@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {indigo400 } from 'material-ui/styles/colors';
 
 import Title from '../components/Title';
+import Container from '../components/Container';
 import Benefit from '../components/Benefit';
 import PlaceCard from '../components/places/PlaceCard';
 import data from '../requests/places';
@@ -45,7 +46,7 @@ export default class Home extends React.Component{
     return(
       <section>
         <div className="Header-background">
-          <div style={{"width": "80%", "margin": "0 auto"}}>
+          <Container>
             <div className="Header-main">
               <Title></Title>
               <RaisedButton label="Crear cuenta gratuita" secondary={true} />
@@ -54,8 +55,7 @@ export default class Home extends React.Component{
             <div>
               <Benefit />
             </div>
-          </div>
-
+          </Container>
         </div>
 
         <div style={{'backgroundColor': indigo400, 'padding': '50px', 'color': 'white'}}>
