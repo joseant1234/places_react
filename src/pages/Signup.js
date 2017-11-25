@@ -6,9 +6,7 @@ import {Link} from 'react-router-dom';
 import Title from '../components/Title';
 import Container from '../components/Container';
 
-
-
-export default class Login extends React.Component{
+export default class Signup extends React.Component{
 
   render(){
     return(
@@ -20,14 +18,14 @@ export default class Login extends React.Component{
               <TextField floatingLabelText="Correo electrónico" type="email" className="textfield" />
               <TextField floatingLabelText="Contraseña" type="password" className="textfield"/>
               <div className="Login-actions">
-                <Link to="/signup"style={{marginRight: '1em'}}>Crear nueva cuenta</Link>
-                <RaisedButton label="Ingresar" secondary={true}/>
+                <Link to="/login"style={{marginRight: '1em'}}>Ya tengo cuenta</Link>
+                <RaisedButton label="Crear cuenta" secondary={true}/>
               </div>
             </div>
           </Container>
         </div>
         <div className="col-xs-12 col-sm-6">
-          <div className="Login-background" style={{'backgroundImage': "url("+process.env.PUBLIC_URL + '/images/login-background.jpeg'+")"}}></div>
+          <div className="Login-background" style={{'backgroundImage': "url("+process.env.PUBLIC_URL + '/images/friends.jpeg'+")"}}></div>
         </div>
       </div>
     )
