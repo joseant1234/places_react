@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter as ReactRouter, Route } from 'react-router-dom';
+import { BrowserRouter as ReactRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import App from './App';
 
-const userSignIn = true
+const userSignIn = false
 export default class Router extends React.Component{
 
   signedInRoutes(){
@@ -27,10 +27,12 @@ export default class Router extends React.Component{
     return(
       <ReactRouter>
         <App>
-            <Route exact path="/" component={this.home()}></Route>
-            <Route path="/login" component={Login}></Route>
-            <Route path="/signup" component={Login}></Route>
-            {this.signedInRoutes()}
+            <Switch>
+              <Route exact path="/" component={this.home()}></Route>
+              <Route path="/login" component={Login}></Route>
+              <Route path="/signup" component={Login}></Route>
+              {this.signedInRoutes()}
+            </Switch>
         </App>
       </ReactRouter>
     )
