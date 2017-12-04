@@ -31,15 +31,20 @@ class App extends Component {
 
   constructor(props){
     super(props);
+    this.goHome = this.goHome.bind(this);
   }
 
-
+  goHome(){
+    // history tiene los lugares o paths q se ha visitado en una pila
+    // con push se inserta un nuevo elemento a la pila
+    this.props.history.push('/');
+  }
 
   render() {
     // this.props.children es un arreglo q contiene los compoenntes q al momento de usar el componente App se insertaron dentro de la declaracion del mismo
     return (
       <MuiThemeProvider>
-        <MyAppBar />
+        <MyAppBar goHome={this.goHome}/>
         <TransitionGroup>
           <CSSTransition classNames="left-out" timeout={300} key={this.props.location.pathname.split('/')[0]} >
             {this.props.children}

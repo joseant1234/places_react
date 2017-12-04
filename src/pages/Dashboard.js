@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 import Container from '../components/Container';
 import PlaceHorizontal from '../components/places/PlaceHorizontal';
-import data from '../requests/places';
+import {getPlaces} from '../requests/places';
 
 
 export default class Dashboard extends React.Component{
@@ -15,9 +15,18 @@ export default class Dashboard extends React.Component{
     super(props);
 
     this.state = {
-        places: data.places
+        places: []
     }
+    this.loadPlaces();
+  }
 
+  loadPlaces(){
+    getPlaces().then(jsonR=>{
+      console.log(jsonR);
+      this.setState({
+        places: jsonR.docs
+      })
+    })
   }
 
   places(){

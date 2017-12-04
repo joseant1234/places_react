@@ -96,6 +96,18 @@
 .PlaceH-avatar img{
   max-width: 80%;
 }
+.Place-cover{
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+}
+.Place-card{
+  text-align: left;
+  padding: 30px;
+}
+.Place-container{
+
+}
 
 
 
