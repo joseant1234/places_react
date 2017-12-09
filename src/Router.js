@@ -25,6 +25,9 @@ export default class Router extends React.Component{
 
   render(){
     // en component se puede enviar una funcion ejecutandose, operador ternario, .... de esta manera poder condicionar la vista q se va a mostrar
+    // el switch es necesario para que las animaciones funcione
+    // switch es un componente que se encarga de hacer render del primer hijo del router que encaja con la ubicacion del path del usuario
+    // si no se usa swtich se muestra todos los componentes que encajan con la ubicacion del usuario
     return(
       <ReactRouter>
         <App>

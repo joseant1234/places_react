@@ -138,6 +138,7 @@
 /* ANIMACIONES PARA LAS PAGINAS CON REACT-TRANSITION-GROUP */
 .left-out-enter {
   opacity: 0;
+  /* empuja todo lo que pueda hacia el eje x*/
   transform: translateX(100%);
 }
 

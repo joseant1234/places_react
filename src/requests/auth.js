@@ -2,7 +2,7 @@ function login(credentials){
   return fetch("http://localhost:8085/sessions",{
     method: 'POST',
     body: JSON.stringify(credentials),
-    header:{
+    headers:{
       'Content-Type': 'application/json',
       'Accept': 'appplication/json'
     }
@@ -15,7 +15,7 @@ function signUp(credentials){
   return fetch("http://localhost:8085/users",{
     method: 'POST',
     body: JSON.stringify(credentials),
-    header:{
+    headers:{
       'Content-Type': 'application/json',
       'Accept': 'appplication/json'
     }
