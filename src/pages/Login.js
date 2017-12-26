@@ -2,18 +2,23 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {BrowserRouter as ReactRouter, Link, Route} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Title from '../components/Title';
 import Container from '../components/Container';
 import { login, signUp } from '../requests/auth';
+// todo lo que se este exportando del archivo userActions lo vo a poner en el objeto actions
+// el nombre del action estará como una propiedad del objeto action
+import * as actions from '../actions/userActions';
 
-
-export default class Login extends React.Component{
+class Login extends React.Component{
 
   constructor(props){
     super(props);
     this.requestAuth = this.requestAuth.bind(this);
     this.createAccount = this.createAccount.bind(this);
+    console.log(props.user);
   }
 
   requestAuth(){
@@ -21,8 +26,15 @@ export default class Login extends React.Component{
       email: this.refs.emailField.getValue(),
       password: this.refs.passwordField.getValue()
     }
-    console.log(credentials)
-    login(credentials).then(console.log).catch(console.log)
+    login(credentials).then(data =>{
+      // la manera de modificar el contenedor centrar o store es haciendo dispatch de una acción
+      // por ello al hacer connect con store parte de las props q se envia es la funcion dispatch
+      this.props.dispatch(actions.login(data.jwt));
+      this.props.dispatch(actions.loadUser(data.user));
+      // push es un actionCreator de react-router-redux para que el router-reducer se encarge de la modificacion en la navegacion
+      // el argumento de push el path a donde se redirecciona la pagina.
+      this.props.dispatch(push('/'));
+    }).catch(console.log)
   }
 
   createAccount(){
@@ -46,6 +58,15 @@ export default class Login extends React.Component{
               <Title/>
               <TextField floatingLabelText="Correo electrónico" type="email" className="textfield" ref="emailField" />
               <TextField floatingLabelText="Contraseña" type="password" className="textfield" ref="passwordField"/>
+
+
+              <Route path="/signup" exact render={()=>{
+                  return(
+                    <TextField floatingLabelText="Nombre" type="text" className="textfield" ref="nombreField"/>
+                  );
+              }}></Route>
+
+              
 
                 <div className="Login-actions">
                   <Route path="/login" exact render={()=>{
@@ -77,8 +98,14 @@ export default class Login extends React.Component{
           }></Route>
         </div>
       </div>
-
     )
   }
-
 }
+
+function mapStateToProps(state,ownProps){
+  return{
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Login);

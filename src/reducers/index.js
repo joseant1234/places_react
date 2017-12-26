@@ -1,6 +1,10 @@
 import places from './placesReducer';
+import user from './userReducer';
 
 // shorthand properties
 // exportando un objeto que contiene el reducer, en donde se va realizar las modificaciones del estado
 // si hay otros reducer se tiene que pasar al objeto {} que se está exportando
-export default{places};
+// aqui se decide como se accede a la informacion que se està alterando en placesReducer
+export default {places, user};
+// se encarga la propiedad store.lugares del reducer places
+// export default{lugares: places};

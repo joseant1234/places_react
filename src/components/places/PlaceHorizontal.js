@@ -29,6 +29,6 @@ export default class PlaceHorizontal extends React.Component{
           </div>
         </div>
       </Card>
-    );
+    )
   }
 }

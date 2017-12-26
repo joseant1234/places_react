@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as ReactRouter, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -7,11 +9,11 @@ import Place from './pages/Place';
 import Dashboard from './pages/Dashboard';
 import App from './App';
 
-const userSignIn = true
-export default class Router extends React.Component{
+const userSignIn = false
+class Router extends React.Component{
 
   signedInRoutes(){
-    if(userSignIn){
+    if(this.props.user.jwt){
       return(
         <Route path="/new" render={()=><h1>Bievenido</h1>} />
       );
@@ -19,14 +21,15 @@ export default class Router extends React.Component{
   }
 
   home(){
-    if(userSignIn) return Dashboard;
+    if(this.props.user.jwt) return Dashboard;
     return Home
   }
 
   render(){
     // en component se puede enviar una funcion ejecutandose, operador ternario, .... de esta manera poder condicionar la vista q se va a mostrar
+    // el transition se puede poner luego del app, pero para no contaminar este archivo q contine las rutas, se pone en app.js
     return(
-      <ReactRouter>
+      <ConnectedRouter history={this.props.history}>
         <App>
             <Switch>
               <Route exact path="/" component={this.home()}></Route>
@@ -36,7 +39,16 @@ export default class Router extends React.Component{
               {this.signedInRoutes()}
             </Switch>
         </App>
-      </ReactRouter>
+      </ConnectedRouter>
     )
   }
 }
+
+
+function mapStateToProps(state,ownProps){
+  return{
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Router);
