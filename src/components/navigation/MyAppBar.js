@@ -8,6 +8,8 @@ import LogoutButton from './LogoutButton';
 export default class MyAppBar extends React.Component{
 
   getName(){
+    if(this.props.user.name)
+      return this.props.user.name;
     if(this.props.user.email)
       return this.props.user.email.split("@")[0];
     return ""

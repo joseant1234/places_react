@@ -12,12 +12,36 @@ import { login, signUp } from '../requests/auth';
 // el nombre del action estará como una propiedad del objeto action
 import * as actions from '../actions/userActions';
 
+// el arroy function no lleva llaves, porque lo que sigue es lo q va hacer return, con los () se indica que todo eso es lo q se va hacer return
+// el componente q es una funciona recibe como argumento los props y hacer return de los elementos q se van a insertar
+// es un staless function, no tiene un lifecycle, no tiene un state, x tanto no debe de tener refs
+// solo los componentes que se crean en base a clases pueden refs. Los q se crean en base a funciones no tiene acceso a refs
+// se pasa la funcion via props al ref y asignarlo al componente a obtener el elemento
+const NameField = (props) => (
+  <TextField floatingLabelText="Nombre" type="text" className="textfield" ref={props.nameRef}/>
+);
+
+const LoginActions = (props) => (
+  <div>
+    <Link to="/signup"style={{marginRight: '1em'}}>Crear nueva cuenta</Link>
+    <RaisedButton label="Ingresar" secondary={true} onClick={props.requestAuth}/>
+  </div>
+)
+
+const SignUpActions = (props) => (
+  <div>
+    <Link to="/login"style={{marginRight: '1em'}}>Ya tengo una cuenta</Link>
+    <RaisedButton label="Crear cuenta" secondary={true} onClick={props.createAccount}/>
+  </div>
+)
+
 class Login extends React.Component{
 
   constructor(props){
     super(props);
     this.requestAuth = this.requestAuth.bind(this);
     this.createAccount = this.createAccount.bind(this);
+    this.auth = this.auth.bind(this);
     console.log(props.user);
   }
 
@@ -26,30 +50,36 @@ class Login extends React.Component{
       email: this.refs.emailField.getValue(),
       password: this.refs.passwordField.getValue()
     }
-    login(credentials).then(data =>{
-      // la manera de modificar el contenedor centrar o store es haciendo dispatch de una acción
-      // por ello al hacer connect con store parte de las props q se envia es la funcion dispatch
-      this.props.dispatch(actions.login(data.jwt));
-      this.props.dispatch(actions.loadUser(data.user));
-      // push es un actionCreator de react-router-redux para que el router-reducer se encarge de la modificacion en la navegacion
-      // el argumento de push el path a donde se redirecciona la pagina.
-      this.props.dispatch(push('/'));
-    }).catch(console.log)
+    login(credentials).then(this.auth).catch(console.log)
+  }
+
+  auth(data){
+    // la manera de modificar el contenedor centrar o store es haciendo dispatch de una acción
+    // por ello al hacer connect con store parte de las props q se envia es la funcion dispatch
+    this.props.dispatch(actions.login(data.jwt));
+    this.props.dispatch(actions.loadUser(data.user));
+    // push es un actionCreator de react-router-redux para que el router-reducer se encarge de la modificacion en la navegacion
+    // el argumento de push el path a donde se redirecciona la pagina.
+    this.props.dispatch(push('/'));
   }
 
   createAccount(){
     const credentials = {
       email: this.refs.emailField.getValue(),
-      password: this.refs.passwordField.getValue()
+      password: this.refs.passwordField.getValue(),
+      name: this.nameElement.getValue()
     }
     console.log(credentials)
-    signUp(credentials).then(console.log).catch(console.log)
+    signUp(credentials).then(data=>{
+      this.auth(data);
+    }).catch(console.log)
   }
 
   // en render de route de imgs se puede poner directo porque es un solo componente
   // solo se puede usar un ReactRouter por componente. En este componente no està el ReactRouter porque en Router.js esta ReactRouter.
   // El componente Login es parte de Router.js
   render(){
+    // en route de namefield, se se pone por component no tiene problemas en reconocer el ref
     return(
       <div className="row middle-xs">
         <div className="col-xs-12 col-sm-6">
@@ -59,33 +89,17 @@ class Login extends React.Component{
               <TextField floatingLabelText="Correo electrónico" type="email" className="textfield" ref="emailField" />
               <TextField floatingLabelText="Contraseña" type="password" className="textfield" ref="passwordField"/>
 
+              <Route path="/signup" exact render={()=> (<NameField nameRef={(el)=> this.nameElement = el }/>) }></Route>
 
-              <Route path="/signup" exact render={()=>{
-                  return(
-                    <TextField floatingLabelText="Nombre" type="text" className="textfield" ref="nombreField"/>
-                  );
-              }}></Route>
+              <div className="Login-actions">
+                <Route path="/login" exact
+                  render={()=>(<LoginActions requestAuth={this.requestAuth} />)}>
+                </Route>
+                <Route path="/signup" exact
+                  render={()=>(<SignUpActions createAccount={this.createAccount} />) }>
+                </Route>
+              </div>
 
-              
-
-                <div className="Login-actions">
-                  <Route path="/login" exact render={()=>{
-                      return(
-                        <div>
-                          <Link to="/signup"style={{marginRight: '1em'}}>Crear nueva cuenta</Link>
-                          <RaisedButton label="Ingresar" secondary={true} onClick={this.requestAuth}/>
-                        </div>
-                      );
-                  }}></Route>
-                  <Route path="/signup" exact render={()=>{
-                      return(
-                        <div>
-                          <Link to="/login"style={{marginRight: '1em'}}>Ya tengo una cuenta</Link>
-                          <RaisedButton label="Crear cuenta" secondary={true} onClick={this.createAccount}/>
-                        </div>
-                      );
-                  }}></Route>
-                </div>
             </div>
           </Container>
         </div>
