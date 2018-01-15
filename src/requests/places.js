@@ -12,7 +12,26 @@ function getPlace(slug){
   }).catch(console.log)
 }
 
-export { getPlaces, getPlace };
+function createPlace(data,jwt){
+  // la clase FormData viene del navegador, es parte de las spec de JS
+  let formData = new FormData
+  for(let field in data){
+    // key, object[key] -> value
+    formData.append(field,data[field])
+  }
+  return fetch(config.url+ "/places",{
+    method: 'POST',
+    body: formData,
+    headers:{
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + jwt
+    }
+  }).then(dataRemote => {
+    return dataRemote.json()
+  })
+}
+
+export { getPlaces, getPlace, createPlace };
 
 export default {
   places: [

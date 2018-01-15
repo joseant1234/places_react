@@ -9,6 +9,7 @@ import reducers from '../reducers';
 // export default const store = createStore(function(state,action){
 //   return state;
 // },{});
+import thunk from 'redux-thunk';
 
 // es una una funcion pura que se encarga de procesar las acciones q tengan q ver con la navegacion o router
 import { routerReducer } from 'react-router-redux';
@@ -45,6 +46,6 @@ export default function configureStore(middleware){
   // se pone {} si el valor inicial es vacio del contenedor
   // createStore: reducer, middleware (acciones q se procesan antes de las acciones en el store), potenciadores
   return createStore(rootReducer,
-    applyMiddleware(middleware),
+    applyMiddleware(middleware,thunk),
     enhancer);
 }

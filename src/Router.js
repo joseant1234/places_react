@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Place from './pages/Place';
+import NewPlace from './pages/places/NewPlace';
 import Dashboard from './pages/Dashboard';
 import App from './App';
 
@@ -15,7 +16,8 @@ class Router extends React.Component{
   signedInRoutes(){
     if(this.props.user.jwt){
       return(
-        <Route path="/new" render={()=><h1>Bievenido</h1>} />
+        // <Route path="/new" render={()=><h1>Bievenido</h1>} />
+        <Route path="/new" component={NewPlace} />
       );
     }
   }
