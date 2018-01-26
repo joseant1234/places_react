@@ -13,8 +13,9 @@ import Title from '../Title';
 export default class VisitModal extends React.Component{
   constructor(props){
     super(props);
-    this.state = { open: true }
+    this.state = { open: false }
     this.closeModal = this.closeModal.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   openModal(){
@@ -29,10 +30,18 @@ export default class VisitModal extends React.Component{
     });
   }
 
+  submit(){
+    const observation = this.refs.observationField.getValue();
+
+    this.props.onSubmit(observation);
+    // this.refs.observationField.setValue("");
+    this.closeModal();
+  }
+
   render(){
     return(
       <div>
-        <Modal isOpen={this.state.open}>
+        <Modal isOpen={this.state.open} ariaHideApp={false}>
           <Container>
             <div style={{'textAlign': 'left', 'marginTop': '2em'}}>
               <header>
@@ -43,15 +52,17 @@ export default class VisitModal extends React.Component{
                 </h1>
               </header>
               <div className="row">
-                <div className="col-xs-4 col-sm-2 col-lg-1"></div>
-                <div class="col-xs">
+                <div className="col-xs-4 col-sm-2 col-lg-1">
+                  <EmojiPicker />
+                </div>
+                <div className="col-xs">
                   <TextField
-                    floatinLabelText="Cuentanos que te parecio este lugar"
+                    floatingLabelText="Cuentanos que te parecio este lugar"
                     ref="observationField"
                     multiLine={true}
                     style={{'width': '100%'}}/>
                   <div style={{'marginTop': '1em'}}>
-                    <RaisedButton label="Guardar" secondary={true}/>
+                    <RaisedButton label="Guardar" onClick={this.submit} secondary={true}/>
                     <FlatButton
                       onClick={this.closeModal}
                       label="Cancelar"
