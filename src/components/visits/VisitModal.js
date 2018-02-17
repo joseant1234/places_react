@@ -7,6 +7,7 @@ import {yellow700} from 'material-ui/styles/colors';
 
 import Container from '../Container';
 import Title from '../Title';
+import EmojiPicker from './emoji_picker/EmojiPicker';
 
 
 
