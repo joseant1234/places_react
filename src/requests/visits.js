@@ -1,9 +1,10 @@
 import config from '../config/secrets';
 
-export function add(jwt,place,observation){
+export function add(jwt,place,observation,reaction){
   const data = {
     _place: place._id,
-    observation
+    observation,
+    reaction
   }
 
   // el accept es para q se mas rápido la lectura de datos cuando se recibe como respuesta, pues se le dice q es del tipo json a JS.

@@ -18,7 +18,7 @@ const Emoji = (props) =>{
   // para imprimir HTML con JS se usa dangerouslySetInnerHTML
   // si fuese un dato q viene de un formulario, manipulación por el usuario, bd no se recomienda usar dangerouslySetInnerHTML, porque se estaría vulnerando la aplicación
   return(
-    <div dangerouslySetInnerHTML={getEmojiHTML(props.code)}></div>
+    <div className="Emoji-emoji" onClick={()=> props.onClick(props.code)} dangerouslySetInnerHTML={getEmojiHTML(props.code)}></div>
   )
 }
 

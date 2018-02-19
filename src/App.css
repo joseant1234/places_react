@@ -1,3 +1,40 @@
+.Emoji-picker{
+  max-height: 50px;
+  overflow: hidden;
+  /* el margin y padding por default del ul */
+  margin: 0px;
+  padding: 0px;
+  /* transition para q los emoji aparezcan con animacion  */
+  transition: all 0.4s;
+  /* para q apreza a la altura del campo o textfield */
+  margin-top: 2em;
+}
+
+/* se usa active, porque en los mobile no hay hover, dado q no hay mouse */
+.Emoji-picker:hover, .Emoji-picker:active{
+  max-height: 300px;
+}
+
+.Emoji-emoji{
+  /* la altura concinde casi con el max-height de Emoji-picker, es para q solo se muestre un emoji en la pantalla */
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  /* nombre de la animacion */
+  animation-name: tada;
+  /* animation-delay es para esperar un timpo antes de inciar la animacion definida */
+  animation-delay: 1s;
+  /* animation-duration es para especificar la duracion de la animaciòn definada */
+  animation-duration: 5s;
+  /* animation-iteration-count es para ver la cantidad de veces q hace la animacion, en este luego de los 5 segundos de la aniacion, espera 1 segundo y luego sigue con la animacion */
+  animation-iteration-count: infinite;
+}
 .FAB{
   position: fixed;
   right: 2em;
@@ -154,4 +191,32 @@
 .left-out-exit-active {
   opacity: 0;
   transform: translateX(0);
+}
+
+
+/* se puso como nombre a la animacion tada, lo q scala de manera progresiva hacia arriba y luego hacia abajo para hacer un efecto */
+@keyframes tada{
+  from {
+    transform: scale3d(1,1,1);
+  }
+
+  5%, 10% {
+    transform: scale3d(.9,.9,.9) rotate3d(0,0,1,-3deg);
+  }
+
+  15%, 25%, 35%, 45% {
+    transform: scale3d(1.1,1.1,1.1) rotate3d(0,0,1,3deg);
+  }
+
+  20%, 30%, 40% {
+    transform: scale3d(1.1,1.1,1.1) rotate3d(0,0,1,-3deg);
+  }
+
+  50% {
+    transform: scale3d(1,1,1);
+  }
+
+  to {
+    transform: scale3d(1,1,1);
+  }
 }

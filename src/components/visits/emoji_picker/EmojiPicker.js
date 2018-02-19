@@ -1,18 +1,37 @@
 import React from 'react';
 
 import Emoji from './Emoji';
-import { emojis } from './emojis';
+import { emojis, relation } from './emojis';
 
 export default class EmojiPicker extends React.Component{
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      emojis
+    }
+
+    this.emojiSelected = this.emojiSelected.bind(this);
+  }
+
   buildEmojis(){
-    return emojis.map(short_code => <Emoji code={short_code}/>)
+    return this.state.emojis.map(short_code => <Emoji onClick={this.emojiSelected} code={short_code}/>)
+  }
+
+  emojiSelected(code){
+    const reaction = relation[code]
+    const emojisReordered = [code].concat(emojis.filter(el => el!= code))
+    this.props.onSelect(reaction);
+    this.setState({
+      emojis: emojisReordered
+    })
   }
 
   render(){
       return(
         <div>
-          <ul>
+          <ul className="Emoji-picker">
             {this.buildEmojis()}
           </ul>
         </div>

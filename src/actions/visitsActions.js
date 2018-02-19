@@ -4,13 +4,13 @@ export function addVisitSuccess(visit){
   return { type: 'ADD_VISIT', visit};
 }
 
-export function addVisit(place,observation){
+export function addVisit(place,observation,reaction){
   // el thunk return una funcion q recibe dos argumentos dispatch y getState
   return (dispatch,getState) =>{
     let user = getState().user;
     if(!user) return null;
 
-    requests.add(user.jwt,place,observation).then(result => {
+    requests.add(user.jwt,place,observation,reaction).then(result => {
       dispatch(addVisitSuccess(result))
     })
   }
