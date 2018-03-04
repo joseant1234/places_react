@@ -29,7 +29,7 @@ class VisitForm extends React.Component{
         <VisitModal  place={this.props.place} onSubmit={this.add} ref="modalRef"/>
         <FlatButton
           onClick={this.openVisitsModal}
-          label="Agregar un comentario"
+          label="Valorar tu visita al negocio"
           secondary={true}/>
       </div>
     );
