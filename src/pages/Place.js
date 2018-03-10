@@ -1,13 +1,17 @@
 import React from 'react';
 import {Card} from 'material-ui/Card';
-// import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Star from 'material-ui/svg-icons/toggle/star';
+import { yellow700 } from 'material-ui/styles/colors';
 
 import Container from '../components/Container';
 import VisitForm from '../components/visits/VisitForm';
 import VisitsCollection from '../components/visits/VisitsCollection';
-import * as actions from '../actions/visitsActions';
+import * as visitsActions from '../actions/visitsActions';
+import * as favoritesActions from '../actions/favoritesActions';
 
 import { getPlace } from '../requests/places';
 
@@ -16,18 +20,30 @@ class Place extends React.Component{
     super(props);
     const slug = props.match.params.slug;
     this.loadPlace(slug);
+    this.fav = this.fav.bind(this);
     this.state={
       place: {}
     }
   }
 
   loadPlace(slug){
+    this.props.dispatch(visitsActions.loadAll(slug));
+
     getPlace(slug).then(json=>{
       this.setState({
         place: json
       })
     })
-    this.props.dispatch(actions.loadAll(slug))
+  }
+
+  fav(){
+      this.props.dispatch(favoritesActions.add(this.state.place._id));
+  }
+
+  favBtn(){
+    return(<FloatingActionButton onClick={this.fav} backgroundColor={yellow700} className="Fav-btn">
+      <Star />
+    </FloatingActionButton>)
   }
 
   render(){
@@ -43,6 +59,7 @@ class Place extends React.Component{
           <div className="row">
             <div className="col-xs-12 col-md-8">
               <Card className="Place-card">
+                {this.favBtn()}
                 <div className="row">
                   <div className="col-xs-12 col-sm-3 col-lg-2">
                     <img src={place.avatarImage} style={{'maxWidth': '100%'}}/>
@@ -74,5 +91,5 @@ function mapStateToProps(state,ownProps){
   }
 }
 
-export default connect(mapStateToProps)(Place);
+export default connect(mapStateToProps)(withRouter(Place));
 // export default withRouter(Place);

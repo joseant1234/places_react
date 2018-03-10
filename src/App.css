@@ -35,6 +35,14 @@
   /* animation-iteration-count es para ver la cantidad de veces q hace la animacion, en este luego de los 5 segundos de la aniacion, espera 1 segundo y luego sigue con la animacion */
   animation-iteration-count: infinite;
 }
+
+.Fav-btn{
+  position: absolute;
+  right: -0.5em;
+  top: -2em;
+  cursor: pointer;
+}
+
 .FAB{
   position: fixed;
   right: 2em;
@@ -141,6 +149,7 @@
 .Place-card{
   text-align: left;
   padding: 30px;
+  position: relative;
 }
 .Place-container{
 
